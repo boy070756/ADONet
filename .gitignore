@@ -1,0 +1,7 @@
+# Ignore Visual Studio cache
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.cache
