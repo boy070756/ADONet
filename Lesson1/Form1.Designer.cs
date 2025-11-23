@@ -34,6 +34,8 @@
             this.btnLoadDisconnected1 = new System.Windows.Forms.Button();
             this.btnCreate = new System.Windows.Forms.Button();
             this.btnCreate1 = new System.Windows.Forms.Button();
+            this.btnUpdateConnected = new System.Windows.Forms.Button();
+            this.btnDeleteConnected = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSinhVien)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,11 +99,33 @@
             this.btnCreate1.UseVisualStyleBackColor = true;
             this.btnCreate1.Click += new System.EventHandler(this.btnCreate1_Click);
             // 
+            // btnUpdateConnected
+            // 
+            this.btnUpdateConnected.Location = new System.Drawing.Point(12, 958);
+            this.btnUpdateConnected.Name = "btnUpdateConnected";
+            this.btnUpdateConnected.Size = new System.Drawing.Size(213, 76);
+            this.btnUpdateConnected.TabIndex = 5;
+            this.btnUpdateConnected.Text = "Update Connected";
+            this.btnUpdateConnected.UseVisualStyleBackColor = true;
+            this.btnUpdateConnected.Click += new System.EventHandler(this.btnUpdateConnected_Click);
+            // 
+            // btnDeleteConnected
+            // 
+            this.btnDeleteConnected.Location = new System.Drawing.Point(12, 1068);
+            this.btnDeleteConnected.Name = "btnDeleteConnected";
+            this.btnDeleteConnected.Size = new System.Drawing.Size(213, 76);
+            this.btnDeleteConnected.TabIndex = 6;
+            this.btnDeleteConnected.Text = "Delete Connected";
+            this.btnDeleteConnected.UseVisualStyleBackColor = true;
+            this.btnDeleteConnected.Click += new System.EventHandler(this.btnDeleteConnected_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1753, 1134);
+            this.ClientSize = new System.Drawing.Size(1753, 1198);
+            this.Controls.Add(this.btnDeleteConnected);
+            this.Controls.Add(this.btnUpdateConnected);
             this.Controls.Add(this.btnCreate1);
             this.Controls.Add(this.btnLoadDisconnected1);
             this.Controls.Add(this.btnLoadDisconnected);
@@ -123,6 +147,8 @@
         private System.Windows.Forms.Button btnLoadDisconnected1;
         private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.Button btnCreate1;
+        private System.Windows.Forms.Button btnUpdateConnected;
+        private System.Windows.Forms.Button btnDeleteConnected;
     }
 }
 

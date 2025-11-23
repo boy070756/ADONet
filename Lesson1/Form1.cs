@@ -107,6 +107,121 @@ namespace Lesson1
                 }
             }
         }
+        private void btnUpdateConnected_Click(object sender, EventArgs e)
+        {
+            // Lấy dòng hiện tại mà người dùng chọn
+            var currentRow = dgvSinhVien.CurrentRow;
+            if (currentRow == null || currentRow.IsNewRow)
+            {
+                MessageBox.Show("Chưa chọn dòng để cập nhật");
+                return;
+            }
+            else
+            {
+                // Lấy dữ liệu từ DataGridView
+                int maSV = Convert.ToInt32(currentRow.Cells["MaSV"].Value);
+                string hoTen = currentRow.Cells["HoTen"].Value?.ToString();
+                string email = currentRow.Cells["Email"].Value?.ToString();
+                DateTime ngaySinh = Convert.ToDateTime(currentRow.Cells["NgaySinh"].Value);
+                string lop = currentRow.Cells["Lop"].Value?.ToString();
+                string gioiTinh = currentRow.Cells["GioiTinh"].Value?.ToString();
+
+                var sqlConnect = new SqlConnection(connectionString);
+                sqlConnect.Open();
+
+                string queryUpdate = @"UPDATE SinhVien
+                               SET HoTen = @HoTen,
+                                   Email = @Email,
+                                   NgaySinh = @NgaySinh,
+                                   Lop = @Lop,
+                                   GioiTinh = @GioiTinh
+                               WHERE MaSV = @MaSV";
+
+                var cmd = new SqlCommand(queryUpdate, sqlConnect);
+                cmd.Parameters.AddWithValue("@HoTen", hoTen);
+                cmd.Parameters.AddWithValue("@Email", email);
+                cmd.Parameters.AddWithValue("@NgaySinh", ngaySinh);
+                cmd.Parameters.AddWithValue("@Lop", lop);
+                cmd.Parameters.AddWithValue("@GioiTinh", gioiTinh);
+                cmd.Parameters.AddWithValue("@MaSV", maSV);
+
+                try
+                {
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                        MessageBox.Show("Cập nhật thành công!");
+                    else
+                        MessageBox.Show("Không tìm thấy sinh viên để cập nhật");
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show($"Lỗi SQL: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi không xác định: {ex.Message}");
+                }
+                finally
+                {
+                    sqlConnect.Close();
+                }
+            }
+        }
+        private void btnDeleteConnected_Click(object sender, EventArgs e)
+        {
+            // Lấy dòng hiện tại mà người dùng chọn
+            var currentRow = dgvSinhVien.CurrentRow;
+            if (currentRow == null || currentRow.IsNewRow)
+            {
+                MessageBox.Show("Chưa chọn dòng để xoá");
+                return;
+            }
+            else
+            {
+                // Lấy dữ liệu từ DataGridView
+                int maSV = Convert.ToInt32(currentRow.Cells["MaSV"].Value);
+
+                DialogResult result = MessageBox.Show($"Bạn có chắc muốn xóa các sinh viên đã chọn?\n{maSV}", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result != DialogResult.Yes) return;
+
+                var sqlConnect = new SqlConnection(connectionString);
+                sqlConnect.Open();
+
+                string queryUpdate = @"Delete SinhVien
+                               WHERE MaSV = @MaSV";
+
+                var cmd = new SqlCommand(queryUpdate, sqlConnect);
+                cmd.Parameters.AddWithValue("@MaSV", maSV);
+
+                try
+                {
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        // Xóa luôn dòng khỏi DataGridView
+                        dgvSinhVien.Rows.Remove(currentRow);
+                        MessageBox.Show("Xóa thành công!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không tìm thấy sinh viên để xóa");
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show($"Lỗi SQL: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi không xác định: {ex.Message}");
+                }
+                finally
+                {
+                    sqlConnect.Close();
+                }
+            }
+        }
+
 
         public void LoadDisconnected()
         {
@@ -407,7 +522,6 @@ namespace Lesson1
         //}
         #endregion
 
-
         #region form1
         //public class SinhVien
         //{
@@ -609,6 +723,7 @@ namespace Lesson1
         //    }
         //}
         #endregion
+
         #region From create
         //public partial class FormCreate : Form
         //{
@@ -692,5 +807,7 @@ namespace Lesson1
         //    }
         //}
         #endregion
+
+       
     }
 }
