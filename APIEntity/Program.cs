@@ -14,9 +14,16 @@ builder.Services.AddDbContext<AppDBContext>(options =>options.UseSqlServer(conSt
 builder.Services.Configure<IISOptions>(options => { });
 
 // Add services to the container.
+builder.Services.AddCors();
 builder.Services.AddControllers();
 
 var app = builder.Build();
+app.UseCors(builder => builder
+                         .AllowCredentials()
+                         .SetIsOriginAllowed((host) => true)
+                         //.AllowAnyOrigin()
+                         .AllowAnyMethod()
+                         .AllowAnyHeader());
 
 // Configure the HTTP request pipeline.
 app.UseAuthorization();
